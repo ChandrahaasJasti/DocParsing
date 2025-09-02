@@ -7,11 +7,11 @@ api_key = os.getenv('OCR')
 
 
 class ocr_check:
-    def print():
-        print("cool")
+    def __init__(self,api_key):
+        self.api_key=api_key
         
-    def ocr_local(self,path,api_):
-        client = Mistral(api_key=api_)
+    def ocr_local(self,path):
+        client = Mistral(api_key=self.api_key)
 
         uploaded_pdf = client.files.upload(
         file={
@@ -30,8 +30,8 @@ class ocr_check:
         )
         return ocr_response
 
-    def ocr_url(self,url,api_key):
-        client = Mistral(api_key=api_key)
+    def ocr_url(self,url):
+        client = Mistral(api_key=self.api_key)
         ocr_response = client.ocr.process(
             model="mistral-ocr-latest",
             document={
@@ -42,8 +42,8 @@ class ocr_check:
         )
         return ocr_response
 
-    def ocr_image(self,url,api_key):
-        client = Mistral(api_key=api_key)
+    def ocr_image(self,url):
+        client = Mistral(api_key=self.api_key)
         ocr_response = client.ocr.process(
         model="mistral-ocr-latest",
         document={
@@ -61,10 +61,4 @@ class ocr_check:
             big.append(mini)
         return big
 
-obj=ocr_check()
-resp=obj.ocr_local(r"/home/chandrahaas/codes/SaarathiFinance/DocumentParser/2526BA139 April25 SAARTHI FINANCE.pdf",api_key)
-#print("ocr response",resp)
-resp=resp.json()
-resp=eval(resp)
-print(resp.keys())
 #print(resp)
